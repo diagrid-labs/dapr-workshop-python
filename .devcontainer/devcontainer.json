@@ -25,6 +25,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
+				"cweijan.vscode-database-client2",
 				"humao.rest-client"]
 		}
 	}
