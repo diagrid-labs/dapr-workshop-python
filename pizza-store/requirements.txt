@@ -4,3 +4,4 @@ dapr
 cloudevents
 uvicorn
 typing-extensions
+requests

@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 import logging
 
-DAPR_PORT = 8001
+APP_PORT = 8001
 
 logging.basicConfig(level=logging.INFO)
 
@@ -18,4 +18,4 @@ CORS(app)
 
 # ------------------- Application routes ------------------- #
 
-app.run(port=DAPR_PORT)
+app.run(port=APP_PORT)
