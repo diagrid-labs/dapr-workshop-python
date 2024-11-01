@@ -18,4 +18,4 @@ CORS(app)
 
 # ------------------- Application routes ------------------- #
 
-app.run(port=8001)
+app.run(port=DAPR_PORT)

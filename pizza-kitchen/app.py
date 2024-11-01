@@ -12,4 +12,4 @@ app = Flask(__name__)
 
 # ------------------- Application routes ------------------- #
 
-app.run(port=8002)
+app.run(port=DAPR_PORT)
