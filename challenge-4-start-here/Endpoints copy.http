@@ -1,0 +1,103 @@
+### Variables
+@pizzaOrderUrl = http://localhost:8001
+@pizzaStorefrontUrl = http://localhost:8002
+@pizzaKitchenUrl = http://localhost:8003
+@pizzaDeliveryUrl = http://localhost:8004
+@pizzaWorkflowUrl = http://localhost:8005
+
+### Direct Pizza Order Endpoint (for testing)
+POST {{pizzaOrderUrl}}/order
+Content-Type: application/json
+
+{
+    "order_id": "123",
+    "pizza_type": "pepperoni",
+    "size": "large",
+    "customer": {
+        "name": "John Doe",
+        "address": "123 Main St",
+        "phone": "555-0123"
+    }
+}
+
+### Get order status (from pizza-order service)
+GET {{pizzaOrderUrl}}/order/123
+
+### Delete order (from pizza-order service)
+DELETE {{pizzaOrderUrl}}/order/123
+
+### Direct Pizza Store Endpoint (for testing)
+POST {{pizzaStorefrontUrl}}/order
+Content-Type: application/json
+
+{
+    "order_id": "123",
+    "pizza_type": "pepperoni",
+    "size": "large",
+    "customer": {
+        "name": "John Doe",
+        "address": "123 Main St",
+        "phone": "555-0123"
+    }
+}
+
+### Start a new pizza order workflow
+POST {{pizzaWorkflowUrl}}/start-order
+Content-Type: application/json
+
+{
+    "order_id": "123",
+    "pizza_type": "pepperoni",
+    "size": "large",
+    "customer": {
+        "name": "John Doe",
+        "address": "123 Main St",
+        "phone": "555-0123"
+    }
+}
+
+### Validate pizza (approve)
+POST {{pizzaWorkflowUrl}}/validate-pizza
+Content-Type: application/json
+
+{
+    "order_id": "123",
+    "approved": true
+}
+
+### Validate pizza (reject)
+POST {{pizzaWorkflowUrl}}/validate-pizza
+Content-Type: application/json
+
+{
+    "order_id": "123",
+    "approved": false
+}
+
+### Get workflow status
+GET {{pizzaWorkflowUrl}}/get-status/123
+Content-Type: application/json
+
+### Pause workflow 
+POST {{pizzaWorkflowUrl}}/pause-order
+Content-Type: application/json
+
+{
+    "order_id": "123"
+}
+
+### Resume workflow 
+POST {{pizzaWorkflowUrl}}/resume-order
+Content-Type: application/json
+
+{
+    "order_id": "123"
+}
+
+### Terminate workflow 
+POST {{pizzaWorkflowUrl}}/cancel-order
+Content-Type: application/json
+
+{
+    "order_id": "123"
+}

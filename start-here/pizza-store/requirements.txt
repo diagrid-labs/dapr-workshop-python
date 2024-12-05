@@ -1,0 +1,7 @@
+Flask
+flask-cors
+dapr
+cloudevents
+uvicorn
+typing-extensions
+requests
