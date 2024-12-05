@@ -24,4 +24,8 @@ apps:
     appPort: 8004
     daprHTTPPort: 3504
     command: ["python3", "app.py"]
-
+  - appDirPath: ./pizza-workflow/
+    appID: pizza-workflow
+    appPort: 8005
+    daprHTTPPort: 3505
+    command: ["python3", "app.py"]

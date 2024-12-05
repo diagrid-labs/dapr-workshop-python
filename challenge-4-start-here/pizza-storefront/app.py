@@ -1,11 +1,10 @@
-# pizza-delivery/app.py
 from flask import Flask, request, jsonify
 from dapr.clients import DaprClient
 import json
 import time
 import logging
 
-APP_PORT = 8004
+APP_PORT = 8002
 DAPR_PUBSUB_NAME = 'pizzapubsub'
 DAPR_PUBSUB_TOPIC_NAME = 'orders'
 
@@ -14,22 +13,19 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-def deliver_pizza(order_data):
-    """Handle the delivery process and update status"""
+def process_order(order_data):
+    """Process the order and update its status"""
     try:
-        # Simulate delivery stages
+        # Simulate order processing steps
         stages = [
-            ('finding_driver', 2),
-            ('driver_assigned', 1),
-            ('picked_up', 2),
-            ('on_the_way', 5),
-            ('arriving', 2),
-            ('at_location', 1)
+            ('validating', 1),
+            ('processing', 2),
+            ('confirmed', 1)
         ]
         
         with DaprClient() as client:
             for stage, duration in stages:
-                order_data['status'] = f'delivery_{stage}'
+                order_data['status'] = stage
                 logger.info(f"Order {order_data['order_id']} - {stage}")
                 
                 # Publish status update
@@ -41,25 +37,22 @@ def deliver_pizza(order_data):
                 
                 time.sleep(duration)
         
-        order_data['status'] = 'delivered'
-        logger.info(f"Order {order_data['order_id']} - delivery completed")
-        
         return order_data
         
     except Exception as e:
-        logger.error(f"Error delivering pizza: {str(e)}")
-        order_data['status'] = 'delivery_failed'
+        logger.error(f"Error processing order: {str(e)}")
+        order_data['status'] = 'failed'
         order_data['error'] = str(e)
         return order_data
 
-@app.route('/deliver', methods=['POST'])
-def start_delivery():
-    """Handle delivery requests"""
+@app.route('/order', methods=['POST'])
+def create_order():
+    """Handle new order requests"""
     order_data = request.json
-    logger.info(f"Starting delivery for order: {order_data['order_id']}")
+    logger.info(f"Received new order: {order_data['order_id']}")
     
-    # Deliver the pizza
-    result = deliver_pizza(order_data)
+    # Process the order
+    result = process_order(order_data)
     
     return jsonify(result)
 

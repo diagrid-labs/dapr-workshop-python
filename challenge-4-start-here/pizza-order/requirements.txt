@@ -1,7 +1,8 @@
 Flask
 flask-cors
 dapr
+dapr-ext-grpc
 cloudevents
 uvicorn
-typing-extensions
 requests
+typing-extensions

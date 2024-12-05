@@ -1,0 +1,10 @@
+Flask
+flask-cors
+dapr
+dapr-ext-grpc
+cloudevents
+uvicorn
+requests
+typing-extensions
+dapr-ext-workflow
+python-json-logger
