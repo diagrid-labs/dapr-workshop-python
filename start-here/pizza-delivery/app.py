@@ -24,7 +24,12 @@ def deliver_pizza(order_data):
             ('at_location', 1)
         ]
         
-        # TODO: Update the order status for each stage
+        # TODO: Publish the status update to the message broker
+        for stage, duration in stages:
+            order_data['status'] = f'delivery_{stage}'
+            logger.info(f"Order {order_data['order_id']} - {stage}")
+            
+            time.sleep(duration)
         
         order_data['status'] = 'delivered'
         logger.info(f"Order {order_data['order_id']} - delivery completed")
