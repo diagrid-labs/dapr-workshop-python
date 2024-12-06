@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from dapr.clients import DaprClient
 import json
 import time
+import requests
 import logging
 
 APP_PORT = 8002
@@ -36,6 +37,36 @@ def process_order(order_data):
                 )
                 
                 time.sleep(duration)
+        
+        # Call the pizza-kitchen service to cook the pizza
+        app_id = 'pizza-kitchen'
+        headers = {'dapr-app-id': app_id, 'content-type': 'application/json'}
+
+        base_url = 'http://localhost'
+        dapr_http_port = 3502
+        method = 'cook'
+        target_url = '%s:%s/%s' % (base_url, dapr_http_port, method)
+
+        response = requests.post(
+            url=target_url,
+            data=json.dumps(order_data),
+            headers=headers
+        )
+        print('result: ' + response.text, flush=True)
+
+        # Call the pizza-delivery service to deliver the pizza
+        app_id = 'pizza-delivery'
+        headers = {'dapr-app-id': app_id, 'content-type': 'application/json'}
+
+        method = 'deliver'
+        target_url = '%s:%s/%s' % (base_url, dapr_http_port, method)
+
+        response = requests.post(
+            url=target_url,
+            data=json.dumps(order_data),
+            headers=headers
+        )
+        print('result: ' + response.text, flush=True)
         
         return order_data
         

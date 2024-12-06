@@ -86,6 +86,8 @@ def cancel_order():
         "status": "cancelled"
     })
 
+# TODO: Register workflow and activities
+
 if __name__ == "__main__":
     # TODO: Start workflow runtime in a separate thread
     
